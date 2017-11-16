@@ -1,9 +1,11 @@
 # Morpheur
-Csound+Cabbage Synth 
+Csound+Cabbage Synth standalone and VST. 
 
 License : GNU GPL, see LICENSE
 
-This is the MORPHEUR synth.
+This is the MORPHEUR synth. Being a patch of Csound and Cabbage, Morpheur should work under the following platforms : ** Linux, Windows and OSX **
+
+Thanks to Cabbage, Morpheur synth can be exported as a VST
 
 MORPHEUR is  a Csound and Cabbage synthesizer relying on single cycle waveshapes for producing the sound.
 
