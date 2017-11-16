@@ -7,6 +7,8 @@ This is the MORPHEUR synth.
 
 MORPHEUR is  a Csound and Cabbage synthesizer relying on single cycle waveshapes for producing the sound.
 
+Parts of the Morpheur code relies on Csound snippets published by Csound developpers/contributers and available on the internet. Many thanks to them for making their work available.
+
 ## INSTALL : 
 - Install CSound version 6.09 or more recent : http://csound.com/download.html
 - Install Cabbage version 2 or more recent from there : http://forum.cabbageaudio.com/
@@ -22,7 +24,6 @@ There are good tutorials on how to do this : i.e. https://www.youtube.com/watch?
 
 
 ## How to use
-
 - Start Cabbage. 
 - Open the Morpheur csd file and run it with CTRL+S. You should be good to go
 
