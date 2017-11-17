@@ -283,23 +283,28 @@ gkPreset_FLag init 0
 
 instr InitData
   ; SPresetPath init "AKWF_sin_0001.wav"
-  gSstereoL sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-left.dat"
-  gSstereoR sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-right.dat"
-
-  SfilepathOscA sprintf "%s/%s", chnget:S("CSD_PATH"), "AKWF_saw.wav"
+  gSstereoL = "hrtf-44100-left.dat"
+  gSstereoR = "hrtf-44100-right.dat"
+ 
+  if chnget("IS_A_PLUGIN") != 1 then 
+   ; kval = chnget:k("PresetCombo")
+ SfilepathOscA = "AKWF_saw.wav"
   chnset SfilepathOscA,"filenameOscA"
   LoadSoundfile "filenameOscA", "filerOscA", "ChannelTableOscA"
   ; gSfilepathOscA sprintf "%s/%s", chnget:S("CSD_PATH"), "AKWF_saw.wav"
-  SfilepathOscB sprintf "%s/%s", chnget:S("CSD_PATH"), "AKWF_tri.wav"
+  SfilepathOscB = "AKWF_tri.wav"
   chnset SfilepathOscB,"filenameOscB"
   LoadSoundfile "filenameOscB", "filerOscB", "ChannelTableOscB"
-  SfilepathOscC sprintf "%s/%s", chnget:S("CSD_PATH"), "AKWF_sin.wav"
+  SfilepathOscC = "AKWF_sin.wav"
   chnset SfilepathOscC,"filenameOscC"
   LoadSoundfile "filenameOscC", "filerOscC", "ChannelTableOscC"
+ 
       gkFlag_ActiveGB_OSC = 1
       gkFlag_ActiveGB_ENV = 1
       gkFlag_ActiveGB_FILT = 1
       gkFlag_ActiveGB_EFFECT = 1
+ 
+  endif
 endin
 
 
@@ -938,7 +943,11 @@ instr ManageGB
       gkFlag_ActiveGB_ENV=0
       gkFlag_ActiveGB_EFFECT=0
       gkFlag_ActiveGB_OSC=1
-    ;  chnset k(1), "But_Call_MainOsc" 
+      chnset k(1), "But_Call_MainOsc" 
+      chnset "visible(0)","GB_ADSR"
+      chnset "visible(0)","GB_Effects"
+      chnset "visible(1)","GB_MainOSc"
+      chnset "visible(0)","GB_Filters"
   endif
 
 
