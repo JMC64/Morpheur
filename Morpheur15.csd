@@ -35,7 +35,7 @@ groupbox bounds(140, 0, 700, 280) identchannel("GB_MainOSc") text("Main Oscilato
   filebutton bounds(10, 150, 80, 20) channel("filenameOscB") value(0) text("Open File", "Open File") populate("", "") shape("ellipse")
   soundfiler bounds(10, 172, 230, 100) channel("beg", "len") identchannel("filerOscB") colour(50, 214, 214, 255) fontcolour:0(160, 160, 160, 255) fontcolour:1(160, 160, 160, 255) tablenumber(902) zoom(-1)
   ;UNCOMMENT following line to show CSound output for debbuging
-  ;csoundoutput bounds(10, 43, 230, 100)    ;
+ ; csoundoutput bounds(10, 43, 230, 100)    ;
 
   ;-----------------------------------
   ;- Region:    ___1-SubOscilOscillator GUI
@@ -228,7 +228,7 @@ groupbox bounds(140, 0, 700, 280) identchannel("GB_Effects") text("Effects") vis
 
 <CsoundSynthesizer>
 <CsOptions>
--n -d -+rtmidi=NULL -M0 -m0d ; --midi-key-cps=4 --midi-velocity-amp=5
+-n -+rtmidi=NULL -M0 -m0d ; --midi-key-cps=4 --midi-velocity-amp=5   ; -d 
 </CsOptions>
 <CsInstruments>
 ; Initialize the global variables.
@@ -303,7 +303,7 @@ instr InitData
       gkFlag_ActiveGB_ENV = 1
       gkFlag_ActiveGB_FILT = 1
       gkFlag_ActiveGB_EFFECT = 1
- 
+  chnset k(0), "PresetCombo"
   endif
 endin
 
@@ -455,23 +455,33 @@ instr ManageGUI
       gk_FM_Amp_Mod = kCtrler23*0.25
       chnset gk_FM_Amp_Mod,"Enc_FM_Amp_Mod"
   endif
+  /* Controller trigger the Filter Cutoff and filter Resonance */ 
   if changed(kCtrler24)== 1  then
-      ; Not implemented yet
+       gk_Filter_CutOff =  kCtrler24*12+50
+       chnset gk_Filter_CutOff,"Enc_Filter_CutOff"      
   endif
   if changed(kCtrler25)== 1  then
       ; Not implemented yet
+       gk_Filter_Reson =kCtrler25*0.01
+        chnset gk_Filter_Reson,"Enc_Filter_Reson"
   endif
-  if changed(kCtrler26)== 1  then
+
+/* RING MODULATION */   
+      if changed(kCtrler26)== 1  then
       ; Not implemented yet
+      gk_Ring_Amp=kCtrler26*0.02
+      chnset gk_Ring_Amp,"Ring_Amp"
   endif
-  if changed(kCtrler27)== 1  then
+  if changed(kCtrler27)== 1 || changed(kCtrler28)== 1 then
+      gk_Ring_Freq=kCtrler27*15 + kCtrler28
+      chnset gk_Ring_Freq,"Ring_Freq"
+  endif
+  /*if changed(kCtrler28)== 1  then
       ; Not implemented yet
-  endif
-  if changed(kCtrler28)== 1  then
-      ; Not implemented yet
-  endif
+  endif*/
   if changed(kCtrler29)== 1  then
-      ; Not implemented yet
+       gk_Ring_Offset=kCtrler29*0.01
+      chnset gk_Ring_Offset,"Ring_Offset"
   endif
   if changed(kCtrler30)== 1  then
       ; Not implemented yet
@@ -585,6 +595,10 @@ instr ManageGB
               gk_Filter_is_On = 1
           else
               gk_Filter_is_On = 0
+              chnset k(0),"ChkBox_Filter_PitchFollowOn"
+             chnset k(0), "ChkBox_Filter_CutOff_LFO_On"
+             chnset k(0), "ChkBox_Filter_Reson_LFO_On"
+             chnset k(0), "ChkBox_Filter_Env_On"                    
           endif
       endif
       ;- Region:  __Check selected filter type
