@@ -18,9 +18,9 @@ Parts of the Morpheur code relies on Csound snippets published by Csound develop
 
 - Download all files from this repository into a single directory
 
-- Get some sinlgle cycle wavforms 
-You can get a whole lot of single cycle wavshapes (.wav) files there: https://www.adventurekid.se/akrt/waveforms/adventure-kid-waveforms/ . Some of them are already included for a quick start.
-The easiest is to place the wavshapes in a directory under the one hosting the Morpheur synth.
+- Unzip single cycle wavforms 
+Unzip the file WavForms.zip under the directory where the Morpheur synth is. This is mandatory if you want to be able to use the presets.
+Credits for these files are to : https://www.adventurekid.se/akrt/waveforms/adventure-kid-waveforms/ . 
 
    - or create yours.
 There are good tutorials on how to do this : i.e. https://www.youtube.com/watch?v=kjPR9tEKe_s.
