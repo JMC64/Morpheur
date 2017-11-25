@@ -255,8 +255,8 @@ giSine		ftgen	0, 0, 4097, 10, 1						; sine wave
 /* The following file are available in Csound Documentation,
 just copy paste them into where Morpheur Synth is
 and provide the path */
-gSstereoL sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-left.dat"
-gSstereoR sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-right.dat"
+/*gSstereoL sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-left.dat"
+gSstereoR sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-right.dat"*/
 
 chnset 0, "ChannelTableOscA"
 chnset 0, "ChannelTableOscB"
@@ -268,23 +268,23 @@ gkFlag_ActiveGB_EFFECT init 0
 gkPreset_FLag init 0
 
 
-#include "Midi_trigger.udo"
-#include "LoadFile2Table.udo"
-#include "SubOscil.udo"
-#include "Envelope.udo"
-#include "Morphing.udo"
-#include "Filters.udo"
-#include "Flanger.udo"
-#include "Chorus.udo"
-#include "FM.udo"
+#include "./UDO/Midi_trigger.udo"
+#include "./UDO/LoadFile2Table.udo"
+#include "./UDO/SubOscil.udo"
+#include "./UDO/Envelope.udo"
+#include "./UDO/Morphing.udo"
+#include "./UDO/Filters.udo"
+#include "./UDO/Flanger.udo"
+#include "./UDO/Chorus.udo"
+#include "./UDO/FM.udo"
 
 
 
 
 instr InitData
   ; SPresetPath init "AKWF_sin_0001.wav"
-  gSstereoL = "hrtf-44100-left.dat"
-  gSstereoR = "hrtf-44100-right.dat"
+  gSstereoL = "./Data/hrtf-44100-left.dat"
+  gSstereoR = "./Data/hrtf-44100-right.dat"
  
   if chnget("IS_A_PLUGIN") != 1 then 
    ; kval = chnget:k("PresetCombo")
@@ -1046,34 +1046,26 @@ instr 801
   ; MIDI note number + pitch bend are converted to cycles per seconds
   kPitchInit = cpsmidinn(p4+gkPitchBend+kAftPitch)
 
-
-  ;printks  "Table %d %d %d %d  \n",0.1 ,ktrig, k(giTableOscA),k(giTableOscB),k(giTableOscC)
-
-
-
   /* Calculate audio */
-
-
+  /* Calculate envelope : call UDO */ 
   kVolume_Envelope Envelop gk_Envelope_Mode, gk_ADSR_Attack,gk_ADSR_Decay, gk_ADSR_Sustain, gk_ADSR_Release
-
-
+  /* Calculate morphing : call UDO */ 
   kWeighMorph Morphing gk_Freq_Morph, gk_Shape_Morph
-
+  /* Calculate FM modulator: call UDO */ 
   aFM FM kPitchInit,gk_FM_Freq_Mod,gk_FM_Amp_Mod,iTableOscC
-
+  /* Calculate audio with oscil A and B*/ 
   aOut1 poscil 1,kPitchInit+aFM,iTableOscA
   aOut2 poscil 1,kPitchInit+aFM,iTableOscB
-
+  /* Calculate sub-audio with oscil A and B*/ 
   aP4 interp kPitchInit
   aOut1,aOut2 SubOscillator aOut1,aOut2,aP4+aFM, gk_SubOsc_Octave,gk_SubOsc_Mix, iTableOscA,iTableOscB
-
-  aOut sum aOut1*kWeighMorph,aOut2*(1-kWeighMorph)
+  aOut sum aOut1*(1-kWeighMorph),aOut2*kWeighMorph
 
   ;------------------------------------
   ;- Region: _Apply Ring Modulation
   if gk_Ring_On == 1 then
-      aRing poscil gk_Ring_Amp, cent(gk_Ring_Freq) * kPitchInit, giSine
-      aOut =aOut*(aRing + gk_Ring_Offset)
+    aRing poscil gk_Ring_Amp, cent(gk_Ring_Freq) * kPitchInit, iTableOscC
+    aOut =aOut*(aRing + gk_Ring_Offset)
   endif
 
 
@@ -1130,25 +1122,18 @@ instr 801
   ;-----------------------------------------
   ;- Region: _Apply Chorus
   if gk_Chorus_On==1 then
-   ;   aOut Chorus aOut, gk_Chorus_Rate,gk_Chorus_Min,gk_Chorus_Max,gk_Chorus_Mix
-
-  ;            aInR,  kChorus_On,   kMix,           kDepth,kRate     ,iOffset xin
-aOut MyChorus  aOut,  gk_Chorus_On,  gk_Chorus_Mix, gk_Chorus_Depth, gk_Chorus_Rate,gk_Chorus_Offset      ;k(0.8),k(14),k(0.2),20 ;0.8,14,0.2,20
-      ;al, ar ensembleChorus aOut, .01, .005, .75, 1, 12, giSine
+    aOut MyChorus  aOut,  gk_Chorus_On,  gk_Chorus_Mix, gk_Chorus_Depth, gk_Chorus_Rate,gk_Chorus_Offset      ;k(0.8),k(14),k(0.2),20 ;0.8,14,0.2,20
   endif
 
-;outs al, ar
   ;-----------------------------------------
   ;- Region: _Out Audio
   outs     aOut, aOut
- /*  chnmix aOut,"LeftSignal"
-    chnmix aOut, "RightSignal"*/
+
 
   ;-----------------------------------------
   ;- Region: _Apply Binaural
   if gk_Stereo == 1 then
-      aleft,aright hrtfstat aOut, gi_Az, gi_Elev, gSstereoL,gSstereoR  ;"C:/Users/Cube/Documents/Csound/hrtf-44100-left.dat","C:/Users/Cube/Documents/Csound/hrtf-44100-right.dat"
-      ; aleft,aright  hrtfer aOut, gkaz, gkel, "HRTFcompact"
+      aleft,aright hrtfstat aOut, gi_Az, gi_Elev, gSstereoL,gSstereoR  
       aleft = aleft*2
       aright = aright*2
   else
@@ -1176,36 +1161,13 @@ endin
 
 
 
-/*
-instr LIMIT
-
-aRef oscil 1, 440
-    aL chnget "LeftSignal"
-    aR chnget "RightSignal"
-    kRmsL rms aL
-    kRmsR rms aR
-    
-   ; if kRmsL < 1 && kRmsR < 1 then
-   ;     outs aL, aR
-  ;  endif
-    chnclear "LeftSignal"
-   chnclear "RightSignal"
-    
-endin
-
-*/
-
-
-
-
+/* Special thanks to Ian Mc Curdy and all contributors to Csound who have released a lot of their work
+ for being used and/or reused by others */ 
 
 instr 	1	;INSTRUMENT THAT SCANS MIDI AND STARTS AND STOPS NOTES
 	insno	=	801					;INSTRUMENT NUMBER OF INSTRUMENT TO BE TRIGGERED
 	MIDI_trigger_instrument	insno,0				;CALL UDO FOR STARTING AND STOPPING NOTE VIA MIDI
 endin
-
-
-
 
 
 
@@ -1218,6 +1180,5 @@ i "InitData" 0 0.2
 i "ManageGUI" 0 z
 i "ManageGB" 0 z
 i 1 0 z
-;i "LIMIT" 0 z
 </CsScore>
 </CsoundSynthesizer>
