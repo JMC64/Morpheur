@@ -255,8 +255,8 @@ giSine		ftgen	0, 0, 4097, 10, 1						; sine wave
 /* The following file are available in Csound Documentation,
 just copy paste them into where Morpheur Synth is
 and provide the path */
-/*gSstereoL sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-left.dat"
-gSstereoR sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-right.dat"*/
+gSstereoL sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-left.dat"
+gSstereoR sprintf "%s/%s", chnget:S("CSD_PATH"), "hrtf-44100-right.dat"
 
 chnset 0, "ChannelTableOscA"
 chnset 0, "ChannelTableOscB"
@@ -268,23 +268,23 @@ gkFlag_ActiveGB_EFFECT init 0
 gkPreset_FLag init 0
 
 
-#include "./UDO/Midi_trigger.udo"
-#include "./UDO/LoadFile2Table.udo"
-#include "./UDO/SubOscil.udo"
-#include "./UDO/Envelope.udo"
-#include "./UDO/Morphing.udo"
-#include "./UDO/Filters.udo"
-#include "./UDO/Flanger.udo"
-#include "./UDO/Chorus.udo"
-#include "./UDO/FM.udo"
+#include "Midi_trigger.udo"
+#include "LoadFile2Table.udo"
+#include "SubOscil.udo"
+#include "Envelope.udo"
+#include "Morphing.udo"
+#include "Filters.udo"
+#include "Flanger.udo"
+#include "Chorus.udo"
+#include "FM.udo"
 
 
 
 
 instr InitData
   ; SPresetPath init "AKWF_sin_0001.wav"
-  gSstereoL = "./Data/hrtf-44100-left.dat"
-  gSstereoR = "./Data/hrtf-44100-right.dat"
+  gSstereoL = "hrtf-44100-left.dat"
+  gSstereoR = "hrtf-44100-right.dat"
  
   if chnget("IS_A_PLUGIN") != 1 then 
    ; kval = chnget:k("PresetCombo")

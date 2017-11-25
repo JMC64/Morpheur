@@ -272,8 +272,8 @@
 		Slider_SubOsc_Mix = "0.5"
 		Slider_SubOsc_Octave = "0"
 		beg = "0"
-		filenameOscA = "WaveForms/AKWF_0019/AKWF_1807.wav"
-		filenameOscB = "WaveForms/AKWF_0019/AKWF_1808.wav"
+		filenameOscB = "WaveForms/AKWF_0019/AKWF_1807.wav"
+		filenameOscA = "WaveForms/AKWF_0019/AKWF_1808.wav"
 		filenameOscC = "WaveForms/AKWF_bw_sin/AKWF_sin_0012.wav"
 />
 
@@ -456,8 +456,8 @@
 		Slider_SubOsc_Mix = "0.04999999701976776123"
 		Slider_SubOsc_Octave = "0"
 		beg = "0"
-		filenameOscA = "./WaveForms/AKWF_0002/AKWF_0104.wav"
-		filenameOscB = "./WaveForms/AKWF_0002/AKWF_0108.wav"
+		filenameOscB = "./WaveForms/AKWF_0002/AKWF_0104.wav"
+		filenameOscA = "./WaveForms/AKWF_0002/AKWF_0108.wav"
 		filenameOscC = "./WaveForms/AKWF_0002/AKWF_0114.wav"
 />
 
@@ -548,8 +548,8 @@
 		Slider_SubOsc_Mix = "0.5"
 		Slider_SubOsc_Octave = "0"
 		beg = "0"
-		filenameOscA = "WaveForms/AKWF_bw_tri/AKWF_tri_0015.wav"
-		filenameOscB = "WaveForms/AKWF_bw_tri/AKWF_tri_0008.wav"
+		filenameOscB = "WaveForms/AKWF_bw_tri/AKWF_tri_0015.wav"
+		filenameOscA = "WaveForms/AKWF_bw_tri/AKWF_tri_0008.wav"
 		filenameOscC = "AKWF_sin.wav"
 />
 
@@ -640,8 +640,8 @@
 		Slider_SubOsc_Mix = "0.69999998807907104492"
 		Slider_SubOsc_Octave = "0"
 		beg = "0"
-		filenameOscA = "WaveForms/AKWF_bw_saw/AKWF_saw_0032.wav"
-		filenameOscB = "WaveForms/AKWF_bw_saw/AKWF_saw_0011.wav"
+		filenameOscB = "WaveForms/AKWF_bw_saw/AKWF_saw_0032.wav"
+		filenameOscA = "WaveForms/AKWF_bw_saw/AKWF_saw_0011.wav"
 		filenameOscC = "WaveForms/AKWF_bw_sin/AKWF_sin_0007.wav"
 />
 
@@ -732,8 +732,8 @@
 		Slider_SubOsc_Mix = "0.68999999761581420898"
 		Slider_SubOsc_Octave = "0"
 		beg = "0"
-		filenameOscA = "WaveForms/AKWF_bw_saw/AKWF_saw_0003.wav"
-		filenameOscB = "WaveForms/AKWF_bw_tri/AKWF_tri_0005.wav"
+		filenameOscB = "WaveForms/AKWF_bw_saw/AKWF_saw_0003.wav"
+		filenameOscA = "WaveForms/AKWF_bw_tri/AKWF_tri_0005.wav"
 		filenameOscC = "WaveForms/AKWF_bw_sin/AKWF_sin_0007.wav"
 />
 
