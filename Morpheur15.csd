@@ -1125,11 +1125,7 @@ instr 801
     aOut MyChorus  aOut,  gk_Chorus_On,  gk_Chorus_Mix, gk_Chorus_Depth, gk_Chorus_Rate,gk_Chorus_Offset      ;k(0.8),k(14),k(0.2),20 ;0.8,14,0.2,20
   endif
 
-  ;-----------------------------------------
-  ;- Region: _Out Audio
-  outs     aOut, aOut
-
-
+ 
   ;-----------------------------------------
   ;- Region: _Apply Binaural
   if gk_Stereo == 1 then
@@ -1141,7 +1137,11 @@ instr 801
       aright= aOut
   endif
   
-  
+   ;-----------------------------------------
+  ;- Region: _Out Audio
+  outs     aleft, aright
+
+
   ;-----------------------------------------
   ;- Region: _Apply Echo
   if gk_Echo_On==1 then
